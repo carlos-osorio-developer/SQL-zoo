@@ -133,4 +133,60 @@ SELECT winner, subject
  WHERE yr=1984
  ORDER BY subject IN ('Physics','Chemistry'), subject, winner
 
- 
+ /* SELECT in SELECT */
+
+ SELECT name FROM world
+  WHERE population >
+     (SELECT population FROM world
+      WHERE name='Russia')
+
+ SELECT name FROM world
+  WHERE gdp/population >
+     (SELECT gdp/population FROM world
+      WHERE name='United Kingdom')
+  AND continent='Europe'
+
+  SELECT name, continent FROM world
+  WHERE continent =
+     (SELECT continent FROM world
+      WHERE name='Argentina')
+  OR continent =
+     (SELECT continent FROM world
+      WHERE name='Australia')
+  ORDER BY name
+
+  SELECT name FROM world
+  WHERE population >
+     (SELECT population FROM world
+      WHERE name='Canada')
+  AND population <
+     (SELECT population FROM world
+      WHERE name='Poland')
+
+ SELECT name, CONCAT(ROUND(population/(SELECT population FROM world /* LOOK ABOVE */
+      WHERE name='Germany')*100,0),'%') AS 'percentage' /* STABLISH A NAME FOR THE COLUMN */
+ FROM world
+  WHERE continent='Europe'
+
+ SELECT name FROM world
+  WHERE gdp >
+     (SELECT MAX(gdp) FROM world WHERE continent='Europe')
+
+ SELECT continent, name, area FROM world x
+  WHERE area >= ALL
+    (SELECT area FROM world y
+        WHERE y.continent=x.continent)
+
+ SELECT continent, name FROM world x /*Look above*/
+  WHERE name = /*Look above*/
+  (SELECT name FROM world y WHERE y.continent=x.continent LIMIT 1); /*Extract only 1st row*/
+
+ SELECT name, continent, population FROM world x
+  WHERE 25000000 >= ALL
+    (SELECT population FROM world y
+        WHERE y.continent=x.continent)
+
+ SELECT name, continent FROM world x
+  WHERE x.population/3 >= ALL
+    (SELECT population FROM world y
+        WHERE y.continent=x.continent AND y.name!=x.name)
