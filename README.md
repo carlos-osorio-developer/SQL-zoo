@@ -1,6 +1,5 @@
 # SQL-zoo
 
-![](https://img.shields.io/badge/Microverse-blueviolet)
 SQL zoo quiz for Microverse SQL Module
 
 ## SQL 
@@ -67,5 +66,4 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Thanks to Microverse and their supportive community.
 - Thanks to everyone commiting in this project.
